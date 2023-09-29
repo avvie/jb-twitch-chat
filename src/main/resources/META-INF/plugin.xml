@@ -1,18 +1,25 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.avvie.jbtwitchchat</id>
+    <id>com.hecategames.jbtwitchchat</id>
     <name>jb-twitch-chat Template</name>
-    <vendor>avvie</vendor>
+    <vendor>Pandora</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.avvie.jbtwitchchat.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <toolWindow factoryClass="com.hecategames.jbtwitchchat.toolWindow.MyToolWindowFactory" id="TwitchChat"
+                    anchor="top"
+                    secondary="true"
+                    icon="icon.png"/>
+        <projectConfigurable
+                parentId="Twitch Chat"
+                instance="com.hecategames.jbtwitchchat.persistence.TwitchChatConfig"
+                id="com.hecategames.jbtwitchchat.persistence.TwitchChatConfig"
+                displayName="Twitch Chat"/>
+        <applicationService serviceImplementation="com.hecategames.jbtwitchchat.persistence.TwitchChatSettings"/>
+        
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.avvie.jbtwitchchat.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
 </idea-plugin>
