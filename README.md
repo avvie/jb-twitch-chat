@@ -13,11 +13,6 @@ A plugin to show twitch chat in intellij and rider
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "jb-twitch-chat"</kbd> >
   <kbd>Install</kbd>
   
-- Manually:
-
-  Download the [latest release](https://github.com/avvie/jb-twitch-chat/releases/latest) and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
-
 
 ---
 Plugin based on the [IntelliJ Platform Plugin Template][template].
