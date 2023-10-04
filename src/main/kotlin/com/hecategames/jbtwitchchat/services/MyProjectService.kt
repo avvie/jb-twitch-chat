@@ -5,8 +5,11 @@ import com.github.twitch4j.TwitchClient
 import com.github.twitch4j.TwitchClientBuilder
 import com.github.twitch4j.chat.events.channel.ChannelMessageEvent
 import com.github.twitch4j.chat.events.channel.ReplyableEvent
+import com.hecategames.jbtwitchchat.persistence.TwitchChatSettings
 import com.intellij.openapi.Disposable
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.Service
+import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.sun.net.httpserver.HttpServer
 import io.ktor.utils.io.errors.*
@@ -33,9 +36,12 @@ class MyProjectService(project: Project) : Disposable {
     val server : HttpServer
 
     val userColor: MutableMap<String, String> = mutableMapOf()
+    private val settings: TwitchChatSettings
 
     init {
 
+        settings = ApplicationManager.getApplication().service<TwitchChatSettings>()
+        val myValue = settings?.TwitchChatUrl
         server = HttpServer.create(InetSocketAddress(3000), 0)
         server.createContext("/token") { httpExchange ->
             // Retrieve the token from the request body
@@ -113,7 +119,7 @@ class MyProjectService(project: Project) : Disposable {
                 }
             }
 
-            twitchClient.chat.joinChannel("pandoragamesoften")
+            twitchClient.chat.joinChannel(settings.TwitchChatUrl)
         }
         catch (e : Exception){
             println(e)
