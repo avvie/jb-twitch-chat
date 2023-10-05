@@ -24,7 +24,7 @@ repositories {
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
-    implementation("com.squareup.okhttp3:okhttp:4.9.3") // Update to the latest version
+    implementation("com.squareup.okhttp3:okhttp:4.11.0") // Update to the latest version
     implementation("com.google.code.gson:gson:2.8.8")
     implementation("com.github.twitch4j:twitch4j:1.17.0")
 }
