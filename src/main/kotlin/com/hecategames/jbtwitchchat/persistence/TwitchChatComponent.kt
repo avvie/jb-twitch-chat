@@ -9,14 +9,16 @@ class TwitchChatComponent {
 
     fun loadSettings(service: TwitchChatSettings) {
         myForm.Url?.text = service.TwitchChatUrl
+        myForm.ClientId?.text = service.TwitchClientId
     }
 
     fun applySettings(service: TwitchChatSettings) {
         service.TwitchChatUrl = myForm.Url?.text
+        service.TwitchClientId = myForm.ClientId?.text
     }
 
     fun isModified(service: TwitchChatSettings): Boolean {
-        return myForm.Url?.text != service.TwitchChatUrl
+        return myForm.Url?.text != service.TwitchChatUrl || myForm.ClientId?.text != service.TwitchClientId
     }
 
 }

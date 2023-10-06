@@ -5,5 +5,6 @@ import javax.swing.JTextField
 
 class TwitchChatForm {
     var Url: JTextField? = null
+    var ClientId: JTextField? = null
     var mainPanel: JPanel? = null
 }
