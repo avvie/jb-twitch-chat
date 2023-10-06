@@ -28,8 +28,8 @@ class MyProjectService(project: Project) : Disposable {
 
     private val listeners = mutableListOf<(Message) -> Unit>()
 
-    var clientId : String = System.getenv("CLIENT_ID")
-    val authUrl = "https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=$clientId&redirect_uri=http://localhost:3000&scope=chat:read&state=1234"
+    var clientId : String = ""
+    var authUrl : String = ""
     val client = OkHttpClient()
 
     var access_token =""
@@ -42,6 +42,9 @@ class MyProjectService(project: Project) : Disposable {
 
         settings = ApplicationManager.getApplication().service<TwitchChatSettings>()
         val myValue = settings?.TwitchChatUrl
+        clientId = settings?.TwitchClientId.toString()
+        authUrl = "https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=$clientId&redirect_uri=http://localhost:3000&scope=chat:read&state=1234"
+
         server = HttpServer.create(InetSocketAddress(3000), 0)
         server.createContext("/token") { httpExchange ->
             // Retrieve the token from the request body
