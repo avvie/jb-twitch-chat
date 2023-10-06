@@ -6,7 +6,10 @@
 
 
 <!-- Plugin description -->
-A plugin to show twitch chat in intellij and rider
+A plugin to show twitch chat in intellij and rider.
+Its for personal use for the time being. 
+
+It currently is NOT handling its http server for OAuth lifecycle well or at all. Use with expected risks
 <!-- Plugin description end -->
 
 ## Installation
@@ -15,6 +18,11 @@ A plugin to show twitch chat in intellij and rider
   
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "jb-twitch-chat"</kbd> >
   <kbd>Install</kbd>
+
+## Usage
+- Create a twitch app and grab the twitch ClientId for your app
+- Add the twitch channel name and your  client id to the plugin settings
+  (they can be found <kbd>Settings/Other Settings/Twitch Chat Plugin</kbd>)
   
 
 ---

@@ -10,7 +10,6 @@ import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
-import com.intellij.openapi.project.Project
 import com.sun.net.httpserver.HttpServer
 import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.GlobalScope
@@ -24,8 +23,8 @@ import java.net.URI
 
 
 @Service(Service.Level.PROJECT)
-class MyProjectService(project: Project) : Disposable {
-
+object MyProjectService : Disposable {
+    public var hasClientId = false
     private val listeners = mutableListOf<(Message) -> Unit>()
 
     var clientId : String = ""
@@ -33,7 +32,7 @@ class MyProjectService(project: Project) : Disposable {
     val client = OkHttpClient()
 
     var access_token =""
-    val server : HttpServer
+    lateinit var server : HttpServer
 
     val userColor: MutableMap<String, String> = mutableMapOf()
     private val settings: TwitchChatSettings
@@ -43,8 +42,13 @@ class MyProjectService(project: Project) : Disposable {
         settings = ApplicationManager.getApplication().service<TwitchChatSettings>()
         val myValue = settings?.TwitchChatUrl
         clientId = settings?.TwitchClientId.toString()
-        authUrl = "https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=$clientId&redirect_uri=http://localhost:3000&scope=chat:read&state=1234"
+        authUrl = setupAuthUrl(clientId)
+        if(clientId != "") {
+            StartServer()
+        }
+    }
 
+    fun StartServer(){
         server = HttpServer.create(InetSocketAddress(3000), 0)
         server.createContext("/token") { httpExchange ->
             // Retrieve the token from the request body
@@ -72,14 +76,24 @@ class MyProjectService(project: Project) : Disposable {
         server.start()
 
 
-
+        hasClientId = true
         val response = runRequest(authUrl)
 
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             Desktop.getDesktop().browse(URI(authUrl))
         }
-
     }
+
+    public fun UpdateClientId(idString: String){
+        clientId = idString
+        hasClientId = true
+        authUrl = setupAuthUrl(clientId)
+        StartServer()
+        runRequest(authUrl)
+    }
+
+    private fun setupAuthUrl(clientId:String) =
+        "https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=$clientId&redirect_uri=http://localhost:3000&scope=chat:read&state=1234"
 
     fun addMessageListener(listener: (Message) -> Unit) {
         listeners.add(listener)
